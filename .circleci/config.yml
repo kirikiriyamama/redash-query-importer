@@ -1,0 +1,18 @@
+version: 2
+jobs:
+  build:
+    working_directory: /go/src/github.com/kirikiriyamama/redash-query-exporter
+    docker:
+      - image: circleci/golang:1.9
+    steps:
+      - checkout
+      - run: |
+          test -z "$(gofmt -s -l . | tee /dev/stderr)"
+          go vet
+
+          if tag=$(git name-rev --tags --name-only --no-undefined HEAD 2>/dev/null); then
+            go get github.com/golang/dep/cmd/dep github.com/mitchellh/gox github.com/tcnksm/ghr
+            dep ensure
+            gox --output dist/{{.Dir}}_{{.OS}}_{{.Arch}}
+            ghr -u kirikiriyamama ${tag} dist/
+          fi
