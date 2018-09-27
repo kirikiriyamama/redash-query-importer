@@ -37,14 +37,14 @@ func run() int {
 		return 64 // EX_USAGE
 	}
 
-	buf, err := ioutil.ReadFile(*file)
+	bytes, err := ioutil.ReadFile(*file)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
 		return 66 // EX_NOINPUT
 	}
 
 	definition := Definition{}
-	err = yaml.Unmarshal(buf, &definition)
+	err = yaml.Unmarshal(bytes, &definition)
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err.Error())
 		return 65 // EX_DATAERR
