@@ -1,6 +1,6 @@
 # redash-query-importer
 
-Import queries from Definition file into [Redash](https://redash.io/)
+Import queries from a definition file into [Redash](https://redash.io/)
 
 ## Installation
 
